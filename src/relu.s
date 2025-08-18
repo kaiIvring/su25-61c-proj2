@@ -13,7 +13,6 @@
 #     this function terminates the program with error code 36
 # ==============================================================================
 relu:
-    ebreak
     # Prologue
     addi t0, a1, -1
     mv t1, x0
