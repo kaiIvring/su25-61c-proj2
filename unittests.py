@@ -66,6 +66,60 @@ class TestRelu(unittest.TestCase):
         # generate the `assembly/TestRelu_test_simple.s` file and run it through venus
         t.execute()
 
+    def test_relu_larger_number(self):
+        # load the test for relu.s
+        t = AssemblyTest(self, "relu.s")
+        t.include("abs.s")
+        # create an array in the data section
+        array0 = t.array([19909, -234343, 3567556, -4957374, 5494379, -69324754, 79457347, -8745745, 978373783])
+        # load address of `array0` into register a0
+        t.input_array("a0", array0)
+        # set a1 to the length of our array
+        t.input_scalar("a1", len(array0))
+        # call the `relu` function
+        t.call("relu")
+        # check that the array0 was changed appropriately
+        t.check_array(array0, [19909, 0, 3567556, 0, 5494379, 0, 79457347, 0, 978373783])
+        # generate the `assembly/TestRelu_test_simple.s` file and run it through venus
+        t.execute()
+
+    def test_relu_larger_array(self):
+        # load the test for relu.s
+        t = AssemblyTest(self, "relu.s")
+        t.include("abs.s")
+        # create an array in the data section
+        array0 = t.array([12, -7, 25, -33, 44, -18, 0, 39, -41, 27,
+                            -4, 8, -15, 20, -9, 31, -2, 17, -26, 5,
+                            46, -30, 14, -8, 3, -45, 28, -19, 7, -1,
+                            22, -50, 11, -6, 34, 0, -12, 41, -37, 19,
+                            -25, 29, -3, 9, -21, 15, -40, 6, -14, 2,
+                            33, -27, 18, -5, 23, -11, 4, -29, 26, 13,
+                            -44, 38, -16, 1, -23, 21, -10, 24, -36, 30,
+                            -7, 32, -20, 16, -13, 45, -42, 40, -32, 35,
+                            -39, 10, -24, 43, -22, 37, -28, 36, -34, 42,
+                            -31, 47, -38, 48, -35, 49, -43, 50, -17, 9]
+                        )
+        # load address of `array0` into register a0
+        t.input_array("a0", array0)
+        # set a1 to the length of our array
+        t.input_scalar("a1", len(array0))
+        # call the `relu` function
+        t.call("relu")
+        # check that the array0 was changed appropriately
+        t.check_array(array0, [12, 0, 25, 0, 44, 0, 0, 39, 0, 27,
+                             0, 8, 0, 20, 0, 31, 0, 17, 0, 5,
+                             46, 0, 14, 0, 3, 0, 28, 0, 7, 0,
+                             22, 0, 11, 0, 34, 0, 0, 41, 0, 19,
+                             0, 29, 0, 9, 0, 15, 0, 6, 0, 2,
+                             33, 0, 18, 0, 23, 0, 4, 0, 26, 13,
+                             0, 38, 0, 1, 0, 21, 0, 24, 0, 30,
+                             0, 32, 0, 16, 0, 45, 0, 40, 0, 35,
+                             0, 10, 0, 43, 0, 37, 0, 36, 0, 42,
+                             0, 47, 0, 48, 0, 49, 0, 50, 0, 9]
+                            )
+        # generate the `assembly/TestRelu_test_simple.s` file and run it through venus
+        t.execute()
+
     def test_relu_length_1(self):
         # load the test for relu.s
         t = AssemblyTest(self, "relu.s")
