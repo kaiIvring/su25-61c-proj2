@@ -16,44 +16,45 @@
 # =================================================================
 
 # my first approach
-argmax:
-    ebreak
-    # Prologue
-    addi t0, a1, -1         # t0 = right   
-    blt t0, x0, exit_code36
-    mv t1, x0               # t1 = left
-    mv t5, t1               # t5 = t1(max)
 
-loop_start:
-    bge t1, t0, loop_end
-    slli t2, t1, 2
-    add t2, a0, t2
-    lw t3, 0(t2)            # t3 = array[left]
-
-    slli t2, t0, 2
-    add t2, a0, t2
-    lw t4, 0(t2)            # t4 = array[right]
-    
-    bge t3, t4, loop_continue
-
-    addi t1, t1, 1  # array[left] < array[right], left_index++ 
-    mv t5, t0       # update max index
-    j loop_start
-
-loop_continue:
-    addi t0, t0, -1 # array[left] >= array[right], right_index--
-    mv t5, t1       # update max index
-    j loop_start
-    
-
-loop_end:
-    # Epilogue
-    mv a0, t5
-    jr ra
-
-exit_code36:
-    li a0, 36
-    j exit
+# argmax:
+#   ebreak
+#    # Prologue
+#    addi t0, a1, -1         # t0 = right   
+#    blt t0, x0, exit_code36
+#    mv t1, x0               # t1 = left
+#    mv t5, t1               # t5 = t1(max)
+#
+# loop_start:
+#    bge t1, t0, loop_end
+#    slli t2, t1, 2
+#    add t2, a0, t2
+#    lw t3, 0(t2)            # t3 = array[left]
+#
+#    slli t2, t0, 2
+#    add t2, a0, t2
+#    lw t4, 0(t2)            # t4 = array[right]
+#    
+#    bge t3, t4, loop_continue
+#
+#   addi t1, t1, 1  # array[left] < array[right], left_index++ 
+#    mv t5, t0       # update max index
+#    j loop_start
+#
+# loop_continue:
+#   addi t0, t0, -1 # array[left] >= array[right], right_index--
+#    mv t5, t1       # update max index
+#    j loop_start
+#    
+#
+# loop_end:
+#    # Epilogue
+#    mv a0, t5
+#    jr ra
+#
+# exit_code36:
+#    li a0, 36
+#    j exit
 
 # better approach
 argmax:
